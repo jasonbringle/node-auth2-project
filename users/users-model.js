@@ -25,6 +25,6 @@ function findUser(user){
 
 function getUsers(){
     return db('users')
-        .select("user", "id")
+        .select("user", "id", "department")
 }
 
