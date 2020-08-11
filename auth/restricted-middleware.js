@@ -3,7 +3,7 @@ const secrets = require('../config/secrets.js')
 
 
 module.exports = ( req, res, next ) => {
-    console.log(req)
+    console.log("search for token",req)
     const token = req.headers.authorization;
     const secret = secrets.jwtSecret ;
 

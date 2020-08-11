@@ -36,11 +36,10 @@ router.post('/login', (req,res) => {
     if(isValid(body)){
     Db.findUser(body)
         .then(user => {
-            if(user && bcrypt.hashSync(body.password, user.password)){
+            if(user && bcrypt.compareSync(body.password, user.password)){
                 const token = generateToken(user)
-                req.session.user = user;
                 res.status(200).json({ message: `${user.user} is logged in!`,
-                    token, user
+                    token
                 })
             } else {
                 res.status(401).json({errormessage: "You shall not pass!"})
@@ -69,18 +68,14 @@ function generateToken(user){
     return jwt.sign(payload, secrets.jwtSecret, options)
 }
 
-// router.delete('/logout',(req, res) => {
-//     if (req.session) {
-//         req.session.destroy((err) => {
-//             if (err) {
-//                 res.status(401).json({ message: 'Error logging out.', error:err});
-//             } else {
-//                 res.json({message:'good bye'});
-//             }
-//         });
-//       } else{
-//           res.end()
-//       }
-// });
+router.delete('/logout',(req, res) => {
+    console.log(token)
+    if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+        res.status(200).json({message: 'You have been logged out'})
+      } else {
+          res.end()
+      }
+});
 
 module.exports = router;

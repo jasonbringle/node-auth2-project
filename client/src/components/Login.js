@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { history } from 'react'
+import { useHistory } from 'react-router-dom'
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Login(){
 const [ login, setLogin] = useState({
@@ -8,6 +9,7 @@ const [ login, setLogin] = useState({
     password:''
 })
 
+const [ value, setValue ] =  useLocalStorage()
 
 const handleChange = e => {
     setLogin({
@@ -16,11 +18,12 @@ const handleChange = e => {
     })
 }
 
+const history = useHistory()
     const logIn= () => {
         axios
         .post("http://localhost:3002/api/auth/login", login)
         .then(res => {
-            window.localStorage.setItem(res.data.user.id, JSON.stringify(res.data.token));
+            setValue(res.data.token)
             history.push("/users")
 
         })

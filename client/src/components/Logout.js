@@ -1,16 +1,13 @@
 import React from "react";
-import axios from 'axios';
+import { useHistory } from "react-router-dom"
 
 export default function Logout(){
+
+const history = useHistory()
+
     const logOut= () => {
-        axios
-        .get("http://localhost:7000/api/auth/logout")
-        .then(res => {
-            console.log(res.data.message)
-        })
-        .catch(err => {
-            console.log({message:"There was an error"})
-        })
+        window.localStorage.removeItem('token')
+        history.push("/")
     }
     return (
         <div>

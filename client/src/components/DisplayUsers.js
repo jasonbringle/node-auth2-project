@@ -5,10 +5,10 @@ export default function DisplayUsers(){
 const [ users, setUsers ] = useState()
 
     useEffect(()=>{
-        const token = window.localStorage.getItem(15);
-
+        const authorization = window.localStorage.getItem("token");
+        
         axios
-        .get("http://localhost:3002/api/users", token)
+        .get("http://localhost:3002/api/users", authorization)
         .then(res => {
             setUsers(res.data)
         })
