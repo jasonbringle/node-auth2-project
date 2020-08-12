@@ -1,14 +1,11 @@
 import React, { useState,useEffect } from "react";
-import axios from "axios";
-
+import axiosWithAuth from '../utils/axiosWithAuth.js';
+import axios from 'axios'
 export default function DisplayUsers(){
 const [ users, setUsers ] = useState()
 
     useEffect(()=>{
-        const authorization = window.localStorage.getItem("token");
-        
-        axios
-        .get("http://localhost:3002/api/users", authorization)
+        axios.get("http://localhost:3002/api/users", {headers: {Authorization: localStorage.getItem("token")}})
         .then(res => {
             setUsers(res.data)
         })

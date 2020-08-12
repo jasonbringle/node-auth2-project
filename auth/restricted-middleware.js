@@ -3,12 +3,11 @@ const secrets = require('../config/secrets.js')
 
 
 module.exports = ( req, res, next ) => {
-    console.log("search for token",req)
-    const token = req.headers.authorization;
+    const {authorization} = req.headers;
     const secret = secrets.jwtSecret ;
-
-    if (token){
-        jwt.verify(token, secret, (err, decodedToken) => {
+console.log(authorization)
+    if (authorization){
+        jwt.verify(authorization, secret, (err, decodedToken) => {
             if(err){
                  res.status(401).json({ message: "You cannot login."})
             } else {
@@ -17,6 +16,7 @@ module.exports = ( req, res, next ) => {
             }
         })
     } else {
+        console.log("else at the end")
         res.status(401).json({ message: "You shall not pass."})
     }
 }

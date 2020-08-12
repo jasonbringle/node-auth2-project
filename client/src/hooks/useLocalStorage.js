@@ -9,7 +9,7 @@ const [ storedValue, setStoredValue ] = useState(() => {
 
 const setValue = value => {
     setStoredValue(value);
-    window.localStorage.setItem("token", JSON.stringify(value))
+    window.localStorage.setItem("token", value)
 }
 
 return [storedValue, setValue]
